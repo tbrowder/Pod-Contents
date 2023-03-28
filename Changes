@@ -1,4 +1,6 @@
-Revision history for Pod-Contents
+Revision history for Pod-ContentsKebab
 
 {{$NEXT}}
+    - Substitue '-' for '_' in all identifier names (i.e., change to kebab- from snake-case)
+    - Convert to use App::Mi6
     - Initial version

@@ -1,20 +1,22 @@
-[![Actions Status](https://github.com/tbrowder/Pod-Contents/actions/workflows/linux.yml/badge.svg)](https://github.com/tbrowder/Pod-Contents/actions) [![Actions Status](https://github.com/tbrowder/Pod-Contents/actions/workflows/macos.yml/badge.svg)](https://github.com/tbrowder/Pod-Contents/actions) [![Actions Status](https://github.com/tbrowder/Pod-Contents/actions/workflows/windows.yml/badge.svg)](https://github.com/tbrowder/Pod-Contents/actions)
+[![Actions Status](https://github.com/tbrowder/Pod-ContentsKebab/actions/workflows/linux.yml/badge.svg)](https://github.com/tbrowder/Pod-ContentsKebab/actions) [![Actions Status](https://github.com/tbrowder/Pod-ContentsKebab/actions/workflows/macos.yml/badge.svg)](https://github.com/tbrowder/Pod-ContentsKebab/actions) [![Actions Status](https://github.com/tbrowder/Pod-ContentsKebab/actions/workflows/windows.yml/badge.svg)](https://github.com/tbrowder/Pod-ContentsKebab/actions)
 
 NAME
 ====
 
-Pod::Contents - a [Raku](https://www.raku-lang.ir/en) module for getting Pod contents as a list or string.
+Pod::ContentsKebab - a [Raku](https://www.raku-lang.ir/en) module for getting Pod contents as a list or string.
+
+NOTE: This module is an exact copy of \@CIAvash's fine Raku module Pod::Contents. See the new 'Changes' file for details, but the two things changed were: (1) making the module structure use module App::Mi6 and (2) changing indentifier names to 'kebab-case' from 'snake-case'.
 
 DESCRIPTION
 ===========
 
-Pod::Contents is a [Raku](https://www.raku-lang.ir/en) module for getting the Pod contents as a list of strings or string. Pod formatters can get inlined, pod contents can be indented (with custom level) and joined with a custom string and titles can be included for table headers and defn terms.
+Pod::ContentsKebab is a [Raku](https://www.raku-lang.ir/en) module for getting the Pod contents as a list of strings or string. Pod formatters can get inlined, pod contents can be indented (with custom level) and joined with a custom string and titles can be included for table headers and defn terms.
 
 SYNOPSIS
 ========
 
 ```raku
-use Pod::Contents:auth<zef:CIAvash>;
+use Pod::ContentsKebab:auth<zef:CIAvash>;
 
 =NAME My App
 
@@ -41,61 +43,61 @@ cell21  | cell22
 
 =end pod
 
-put $=pod.&join_pod_contents_of: 'NAME';
+put $=pod.&join-pod-contents-of: 'NAME';
 =output My App␤
 
-put $=pod.&get_first_pod('NAME').&join_pod_contents;
+put $=pod.&get-first-pod('NAME').&join-pod-contents;
 =output My App␤
 
-put $=pod[0].&join_pod_contents;
+put $=pod[0].&join-pod-contents;
 =output My App␤
 
-put $=pod[0].&get_pod_contents.join("\n\n");
+put $=pod[0].&get-pod-contents.join("\n\n");
 =output My App␤
 
-put $=pod.&join_pod_contents_of: 'DESCRIPTION';
+put $=pod.&join-pod-contents-of: 'DESCRIPTION';
 =output An app that does stuff␤
 
-put $=pod.&join_pod_contents_of: 'DESCRIPTION', :!inline_formatters;
+put $=pod.&join-pod-contents-of: 'DESCRIPTION', :!inline-formatters;
 =output An ␤␤app␤␤ that does ␤␤stuff␤
 
-put $=pod.&join_pod_contents_of: 'DESCRIPTION', "\n", :!inline_formatters;
+put $=pod.&join-pod-contents-of: 'DESCRIPTION', "\n", :!inline-formatters;
 =output An ␤app␤ that does ␤stuff␤
 
-put $=pod.&get_pod_contents_of('DESCRIPTION', :!inline_formatters).raku;
+put $=pod.&get-pod-contents-of('DESCRIPTION', :!inline-formatters).raku;
 =output ("An ", "app", " that does ", "stuff")␤
 
-put $=pod.&get_first_pod('pod').&join_pod_contents_of: Pod::Heading;
+put $=pod.&get-first-pod('pod').&join-pod-contents-of: Pod::Heading;
 =output A heading␤
 
-put $=pod.&join_pod_contents_of: Pod::Item, :recurse;
+put $=pod.&join-pod-contents-of: Pod::Item, :recurse;
 =output An item␤
 
-put $=pod.&get_pod_contents_of(Pod::Block::Table, :recurse).raku;
+put $=pod.&get-pod-contents-of(Pod::Block::Table, :recurse).raku;
 =output (("cell11", "cell12"), ("cell21", "cell22"))␤
 
-put $=pod.&get_pod_contents_of(Pod::Block::Table, :recurse, :include_title).raku;
+put $=pod.&get-pod-contents-of(Pod::Block::Table, :recurse, :include-title).raku;
 =output (("hcell00", "hcell01"), ("cell11", "cell12"), ("cell21", "cell22"))␤
 
-put $=pod.&join_pod_contents_of: Pod::Block::Table, :recurse;
+put $=pod.&join-pod-contents-of: Pod::Block::Table, :recurse;
 =output cell11 cell12␤cell21 cell22␤
 
-put $=pod.&join_pod_contents_of: Pod::Block::Table, :recurse, :include_title;
+put $=pod.&join-pod-contents-of: Pod::Block::Table, :recurse, :include-title;
 =output hcell00 hcell01␤cell11 cell12␤cell21 cell22␤
 
-put $=pod.&join_pod_contents_of: Pod::Block::Code, :recurse;
+put $=pod.&join-pod-contents-of: Pod::Block::Code, :recurse;
 =output my $app;␤say 'some code'␤
 
-put $=pod.&join_pod_contents_of: Pod::Block::Code, :indent_content, :recurse;
+put $=pod.&join-pod-contents-of: Pod::Block::Code, :indent-content, :recurse;
 =output     my $app;␤    say 'some code'␤
 
-put $=pod.&get_first_pod('pod').contents.grep(Pod::Item)[1].&join_pod_contents(:indent_content);
+put $=pod.&get-first-pod('pod').contents.grep(Pod::Item)[1].&join-pod-contents(:indent-content);
 =output     Another item␤␤   cell11 cell12␤cell21 cell22␤␤        my $app;␤        say 'some code'␤
 
-put $=pod.&get_first_pod('pod').&get_pods(Pod::Item)[1].&join_pod_contents(:indent_content, :indent_level(2));
+put $=pod.&get-first-pod('pod').&get-pods(Pod::Item)[1].&join-pod-contents(:indent-content, :indent-level(2));
 =output   Another item␤␤ cell11 cell12␤cell21 cell22␤␤      my $app;␤      say 'some code'␤
 
-put $=pod.&get_pods(Pod::Item, :recurse)[1].&join_pod_contents(:indent_content, :indent_level(2));
+put $=pod.&get-pods(Pod::Item, :recurse)[1].&join-pod-contents(:indent-content, :indent-level(2));
 =output   Another item␤␤ cell11 cell12␤cell21 cell22␤␤      my $app;␤      say 'some code'␤
 ```
 
@@ -105,7 +107,7 @@ INSTALLATION
 You need to have [Raku](https://www.raku-lang.ir/en) and [zef](https://github.com/ugexe/zef), then run:
 
 ```console
-zef install --/test Pod::Contents:auth<zef:CIAvash>
+zef install --/test Pod::ContentsKebab:auth<zef:CIAvash>
 ```
 
 or if you have cloned the repo:
@@ -126,10 +128,10 @@ SUBS
 
 
 
-### sub get_pod_contents_of
+### sub get-pod-contents-of
 
 ```raku
-sub get_pod_contents_of(
+sub get-pod-contents-of(
     $pod where { ... },
     $thing where { ... },
     Bool :$recurse,
@@ -137,12 +139,12 @@ sub get_pod_contents_of(
 ) returns List:D
 ```
 
-Returns a list of pod contents. Can recursively find pod with C<:recurse>. Can indent pod contents with C<:indent_content>. Can include pod titles with C<:include_title>. Can disable inlining pod formatters with C<:!inline_formatters>. Can put same level items next to each other with C<:adjacent_items>.
+Returns a list of pod contents. Can recursively find pod with C<:recurse>. Can indent pod contents with C<:indent-content>. Can include pod titles with C<:include-title>. Can disable inlining pod formatters with C<:!inline-formatters>. Can put same level items next to each other with C<:adjacent-items>.
 
-### sub join_pod_contents_of
+### sub join-pod-contents-of
 
 ```raku
-sub join_pod_contents_of(
+sub join-pod-contents-of(
     $pod where { ... },
     $thing where { ... },
     Bool :$recurse,
@@ -150,24 +152,24 @@ sub join_pod_contents_of(
 ) returns Str:D
 ```
 
-Joins pod contents of the requested Pod with the passed string or 2 newlines. Can recursively find pod with C<:recurse>. Can indent pod contents with C<:indent_content>. Can include pod titles with C<:include_title>. Can disable inlining pod formatters with C<:!inline_formatters>. Can put same level items next to each other with C<:adjacent_items>.
+Joins pod contents of the requested Pod with the passed string or 2 newlines. Can recursively find pod with C<:recurse>. Can indent pod contents with C<:indent-content>. Can include pod titles with C<:include-title>. Can disable inlining pod formatters with C<:!inline-formatters>. Can put same level items next to each other with C<:adjacent-items>.
 
-### sub get_first_pod
+### sub get-first-pod
 
 ```raku
-sub get_first_pod(
+sub get-first-pod(
     $pod where { ... },
     $thing where { ... },
     Bool :$recurse
-) returns Pod::Contents::POD
+) returns Pod::ContentsKebab::POD
 ```
 
 Finds the first Pod using the passed C<pod> or C<name>, does so recursively if C<:recurse> is passed.
 
-### sub get_pods
+### sub get-pods
 
 ```raku
-sub get_pods(
+sub get-pods(
     $pod where { ... },
     $thing where { ... },
     Bool :$recurse
@@ -176,59 +178,59 @@ sub get_pods(
 
 Finds all Pods using the passed C<pod> or C<name>, does so recursively if C<:recurse> is passed
 
-### sub join_pod_contents
+### sub join-pod-contents
 
 ```raku
-sub join_pod_contents(
+sub join-pod-contents(
     $pod where { ... },
     $with = "\n\n",
     |c
 ) returns Str:D
 ```
 
-Joins pod contents of the requested Pod type with the passed string or 2 newlines. Can indent pod contents with C<:indent_content>. Can include pod titles with C<:include_title>. Can disable inlining pod formatters with C<:!inline_formatters>. Can put same level items next to each other with C<:adjacent_items>.
+Joins pod contents of the requested Pod type with the passed string or 2 newlines. Can indent pod contents with C<:indent-content>. Can include pod titles with C<:include-title>. Can disable inlining pod formatters with C<:!inline-formatters>. Can put same level items next to each other with C<:adjacent-items>.
 
-### sub get_pod_contents
+### sub get-pod-contents
 
 ```raku
-sub get_pod_contents(
+sub get-pod-contents(
     |
 ) returns Mu
 ```
 
-Recursively gets the Pod contents of a Pod block as a list of (list of) strings. Can indent pod contents with C<:indent_content>. Can include pod titles with C<:include_title>. Can disable inlining pod formatters with C<:!inline_formatters>. Can put same level items next to each other with C<:adjacent_items>.
+Recursively gets the Pod contents of a Pod block as a list of (list of) strings. Can indent pod contents with C<:indent-content>. Can include pod titles with C<:include-title>. Can disable inlining pod formatters with C<:!inline-formatters>. Can put same level items next to each other with C<:adjacent-items>.
 
-### sub check_pod
+### sub check-pod
 
 ```raku
-sub check_pod(
+sub check-pod(
     $pod where { ... },
-    $pod_type where { ... }
+    $pod-type where { ... }
 ) returns Bool
 ```
 
-Returns C<True> if C<pod> matches C<pod_type>
+Returns C<True> if C<pod> matches C<pod-type>
 
-### sub indent_content
+### sub indent-content
 
 ```raku
-sub indent_content(
+sub indent-content(
     Str:D $string,
-    Int:D $indent_level where { ... } = 4
+    Int:D $indent-level where { ... } = 4
 ) returns Str:D
 ```
 
-Indents C<string> by C<indent_level>
+Indents C<string> by C<indent-level>
 
 REPOSITORY
 ==========
 
-[https://codeberg.org/CIAvash/Pod-Contents/](https://codeberg.org/CIAvash/Pod-Contents/)
+[https://codeberg.org/CIAvash/Pod-ContentsKebab/](https://codeberg.org/CIAvash/Pod-ContentsKebab/)
 
 BUG
 ===
 
-[https://codeberg.org/CIAvash/Pod-Contents/issues](https://codeberg.org/CIAvash/Pod-Contents/issues)
+[https://codeberg.org/CIAvash/Pod-ContentsKebab/issues](https://codeberg.org/CIAvash/Pod-ContentsKebab/issues)
 
 AUTHOR
 ======
@@ -243,11 +245,11 @@ Copyright © 2021 Siavash Askari Nasr
 LICENSE
 =======
 
-This file is part of Pod::Contents.
+This file is part of Pod::ContentsKebab.
 
-Pod::Contents is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+Pod::ContentsKebab is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-Pod::Contents is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+Pod::ContentsKebab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public License along with Pod::Contents. If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU Lesser General Public License along with Pod::ContentsKebab. If not, see <http://www.gnu.org/licenses/>.
 

@@ -4,5 +4,5 @@ use Test;
 
 BEGIN {
     plan 1;
-    use-ok 'Pod::Contents:auth<zef:CIAvash>';
+    use-ok 'Pod::ContentsKebab';
 }
