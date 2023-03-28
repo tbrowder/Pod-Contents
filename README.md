@@ -1,3 +1,5 @@
+[![Actions Status](https://github.com/tbrowder/Pod-Contents/actions/workflows/linux.yml/badge.svg)](https://github.com/tbrowder/Pod-Contents/actions) [![Actions Status](https://github.com/tbrowder/Pod-Contents/actions/workflows/macos.yml/badge.svg)](https://github.com/tbrowder/Pod-Contents/actions) [![Actions Status](https://github.com/tbrowder/Pod-Contents/actions/workflows/windows.yml/badge.svg)](https://github.com/tbrowder/Pod-Contents/actions)
+
 NAME
 ====
 
@@ -6,10 +8,7 @@ Pod::Contents - a [Raku](https://www.raku-lang.ir/en) module for getting Pod con
 DESCRIPTION
 ===========
 
-Pod::Contents is a [Raku](https://www.raku-lang.ir/en) module for getting the Pod contents as a list of strings or string.
-
-Pod formatters can get inlined, pod contents can be indented (with custom level) and joined with a custom
-string and titles can be included for `table` headers and `defn` terms.
+Pod::Contents is a [Raku](https://www.raku-lang.ir/en) module for getting the Pod contents as a list of strings or string. Pod formatters can get inlined, pod contents can be indented (with custom level) and joined with a custom string and titles can be included for table headers and defn terms.
 
 SYNOPSIS
 ========
@@ -125,7 +124,9 @@ prove -ve 'raku -I.' --ext rakutest
 SUBS
 ====
 
-## sub get_pod_contents_of
+
+
+### sub get_pod_contents_of
 
 ```raku
 sub get_pod_contents_of(
@@ -136,15 +137,9 @@ sub get_pod_contents_of(
 ) returns List:D
 ```
 
-Returns a list of pod contents.
+Returns a list of pod contents. Can recursively find pod with C<:recurse>. Can indent pod contents with C<:indent_content>. Can include pod titles with C<:include_title>. Can disable inlining pod formatters with C<:!inline_formatters>. Can put same level items next to each other with C<:adjacent_items>.
 
-- Can recursively find pod with `:recurse`.
-- Can indent pod contents with `:indent_content`.
-- Can include pod titles with `:include_title`.
-- Can disable inlining pod formatters with `:!inline_formatters`.
-- Can put same level items next to each other with `:adjacent_items`.
-
-## sub join_pod_contents_of
+### sub join_pod_contents_of
 
 ```raku
 sub join_pod_contents_of(
@@ -155,15 +150,9 @@ sub join_pod_contents_of(
 ) returns Str:D
 ```
 
-Joins pod contents of the requested Pod with the passed string or 2 newlines.
+Joins pod contents of the requested Pod with the passed string or 2 newlines. Can recursively find pod with C<:recurse>. Can indent pod contents with C<:indent_content>. Can include pod titles with C<:include_title>. Can disable inlining pod formatters with C<:!inline_formatters>. Can put same level items next to each other with C<:adjacent_items>.
 
-- Can recursively find pod with `:recurse`.
-- Can indent pod contents with `:indent_content`.
-- Can include pod titles with `:include_title`.
-- Can disable inlining pod formatters with `:!inline_formatters`.
-- Can put same level items next to each other with `:adjacent_items`.
-
-## sub get_first_pod
+### sub get_first_pod
 
 ```raku
 sub get_first_pod(
@@ -173,9 +162,9 @@ sub get_first_pod(
 ) returns Pod::Contents::POD
 ```
 
-Finds the first Pod using the passed `pod` or `name`, does so recursively if `:recurse` is passed.
+Finds the first Pod using the passed C<pod> or C<name>, does so recursively if C<:recurse> is passed.
 
-## sub get_pods
+### sub get_pods
 
 ```raku
 sub get_pods(
@@ -185,9 +174,21 @@ sub get_pods(
 ) returns List:D
 ```
 
-Finds all Pods using the passed `pod` or `name`, does so recursively if `:recurse` is passed
+Finds all Pods using the passed C<pod> or C<name>, does so recursively if C<:recurse> is passed
 
-## sub get_pod_contents
+### sub join_pod_contents
+
+```raku
+sub join_pod_contents(
+    $pod where { ... },
+    $with = "\n\n",
+    |c
+) returns Str:D
+```
+
+Joins pod contents of the requested Pod type with the passed string or 2 newlines. Can indent pod contents with C<:indent_content>. Can include pod titles with C<:include_title>. Can disable inlining pod formatters with C<:!inline_formatters>. Can put same level items next to each other with C<:adjacent_items>.
+
+### sub get_pod_contents
 
 ```raku
 sub get_pod_contents(
@@ -195,34 +196,29 @@ sub get_pod_contents(
 ) returns Mu
 ```
 
-Recursively gets the Pod contents of a Pod block as a list of (list of) strings.
+Recursively gets the Pod contents of a Pod block as a list of (list of) strings. Can indent pod contents with C<:indent_content>. Can include pod titles with C<:include_title>. Can disable inlining pod formatters with C<:!inline_formatters>. Can put same level items next to each other with C<:adjacent_items>.
 
-- Can indent pod contents with `:indent_content`.
-- Can include pod titles with `:include_title`.
-- Can disable inlining pod formatters with `:!inline_formatters`.
-- Can put same level items next to each other with `:adjacent_items`.
-
-## sub check_pod
+### sub check_pod
 
 ```raku
 sub check_pod(
     $pod where { ... },
     $pod_type where { ... }
-) returns Bool is export(:helpers)
+) returns Bool
 ```
 
-Returns `True` if `pod` matches `pod_type`
+Returns C<True> if C<pod> matches C<pod_type>
 
-## sub indent_content
+### sub indent_content
 
 ```raku
 sub indent_content(
     Str:D $string,
     Int:D $indent_level where { ... } = 4
-) returns Str is export(:helpers)
+) returns Str:D
 ```
 
-Indents `string` by `indent_level`
+Indents C<string> by C<indent_level>
 
 REPOSITORY
 ==========

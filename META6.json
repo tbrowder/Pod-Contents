@@ -1,14 +1,25 @@
 {
-    "perl": "6.d",
-    "name": "Pod::Contents",
-    "description": "Library for recursively getting contents of Pod blocks and returning them as a list of strings or string. And more.",
-    "authors": ["Siavash Askari Nasr"],
-    "auth": "zef:CIAvash",
-    "version": "0.1.1",
-    "tags": ["Pod", "Contents", "Library", "Utility", "String", "List"],
-    "license": "LGPL-3.0-or-later",
-    "source-url": "https://codeberg.org/CIAvash/Pod-Contents.git",
-    "provides": {
-        "Pod::Contents": "lib/Pod/Contents.rakumod"
-    }
+  "auth": "zef:tbrowder",
+  "authors": [
+    "Tom Browder"
+  ],
+  "build-depends": [
+  ],
+  "depends": [
+  ],
+  "description": "a Raku module for getting Pod contents as a list or string",
+  "license": "Artistic-2.0",
+  "name": "Pod::Contents",
+  "perl": "6.d",
+  "provides": {
+    "Pod::Contents": "lib/Pod/Contents.rakumod"
+  },
+  "resources": [
+  ],
+  "source-url": "https://github.com/tbrowder/Pod-Contents.git",
+  "tags": [
+  ],
+  "test-depends": [
+  ],
+  "version": "0.0.1"
 }
