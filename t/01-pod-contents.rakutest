@@ -2,7 +2,7 @@ use v6.d;
 
 use Test;
 
-use Pod::Contents;
+use Pod::ContentsKebab;
 
 plan 50;
 
@@ -60,130 +60,130 @@ definition
 
 =end pod
 
-is-deeply $=pod.&get_first_pod('NAME'), $=pod[1], 'NAME was found correctly';
+is-deeply $=pod.&get-first-pod('NAME'), $=pod[1], 'NAME was found correctly';
 
 is-deeply $=pod.first({.?name ~~ 'pod'}).contents.first(Pod::Heading),
-          $=pod.&get_first_pod('pod').&get_first_pod(Pod::Heading),
+          $=pod.&get-first-pod('pod').&get-first-pod(Pod::Heading),
           'head1 was found correctly';
 
-is-deeply $=pod.&get_first_pod(Pod::Item, :recurse),
+is-deeply $=pod.&get-first-pod(Pod::Item, :recurse),
           $=pod.first({.?name ~~ 'pod'}).contents.first(Pod::Item),
           'First item was found correctly using :recurse';
 
-is-deeply $=pod.&get_first_pod(Pod::Block::Code, :recurse),
+is-deeply $=pod.&get-first-pod(Pod::Block::Code, :recurse),
           $=pod.first({.?name ~~ 'pod'}).contents.grep(Pod::Item)[3].contents.first(Pod::Block::Code),
           'code was found correctly using :recurse';
 
-is-deeply $=pod.&get_first_pod('pod').&get_pod_contents_of(Pod::Heading), ('Some heading',),
+is-deeply $=pod.&get-first-pod('pod').&get-pod-contents-of(Pod::Heading), ('Some heading',),
           'head1 content returned correctly';
 
-is-deeply $=pod.&get_first_pod('pod').&join_pod_contents_of(Pod::Heading), 'Some heading',
+is-deeply $=pod.&get-first-pod('pod').&join-pod-contents-of(Pod::Heading), 'Some heading',
           'head1 string returned correctly';
 
-is-deeply $=pod.&get_pod_contents_of(Pod::Item, :recurse), ('an item',),
+is-deeply $=pod.&get-pod-contents-of(Pod::Item, :recurse), ('an item',),
           'First item content returned correctly using :recurse';
 
-is-deeply $=pod.&join_pod_contents_of(Pod::Item, :recurse), 'an item',
+is-deeply $=pod.&join-pod-contents-of(Pod::Item, :recurse), 'an item',
           'First item string returned correctly using :recurse';
 
-is-deeply $=pod.&join_pod_contents_of('AUTHOR', :recurse), 'Siavash',
+is-deeply $=pod.&join-pod-contents-of('AUTHOR', :recurse), 'Siavash',
           'AUTHOR string returned correctly using :recurse';
 
-is-deeply $=pod.first({.?name ~~ 'NAME'}).&get_pod_contents, ('some app',), 'NAME - Simple pod block content';
+is-deeply $=pod.first({.?name ~~ 'NAME'}).&get-pod-contents, ('some app',), 'NAME - Simple pod block content';
 
-is-deeply $=pod.&get_pod_contents_of('NAME'), $=pod.first({.?name ~~ 'NAME'}).&get_pod_contents,
+is-deeply $=pod.&get-pod-contents-of('NAME'), $=pod.first({.?name ~~ 'NAME'}).&get-pod-contents,
           'NAME contents returned correctly';
 
-is-deeply $=pod.&join_pod_contents_of('NAME'), 'some app',
-          'NAME - join_pod_contents_of: Simple pod block content';
+is-deeply $=pod.&join-pod-contents-of('NAME'), 'some app',
+          'NAME - join-pod-contents-of: Simple pod block content';
 
-is-deeply $=pod.first({.?name ~~ 'TITLE'}).&get_pod_contents,
+is-deeply $=pod.first({.?name ~~ 'TITLE'}).&get-pod-contents,
           ('An app - does some great stuff and prints the results',),
-          'TITLE - get_pod_contents: Content with inline formatters';
+          'TITLE - get-pod-contents: Content with inline formatters';
 
-is-deeply $=pod.&get_pod_contents_of('TITLE'),
+is-deeply $=pod.&get-pod-contents-of('TITLE'),
           ('An app - does some great stuff and prints the results',),
-          'TITLE - get_pod_contents_of: Content with inline formatters';
+          'TITLE - get-pod-contents-of: Content with inline formatters';
 
-is-deeply $=pod.&join_pod_contents_of('TITLE'),
+is-deeply $=pod.&join-pod-contents-of('TITLE'),
           'An app - does some great stuff and prints the results',
-          'TITLE - join_pod_contents_of: Content with inline formatters';
+          'TITLE - join-pod-contents-of: Content with inline formatters';
 
-is-deeply $=pod.first({.?name ~~ 'TITLE'}).&get_pod_contents(:!inline_formatters),
+is-deeply $=pod.first({.?name ~~ 'TITLE'}).&get-pod-contents(:!inline-formatters),
           ('An app', ' - ', 'does', ' ', 'some', ' great stuff and ', 'prints', ' the results'),
-          'TITLE - get_pod_contents: Content without inline formatters';
+          'TITLE - get-pod-contents: Content without inline formatters';
 
-is-deeply $=pod.&get_pod_contents_of('TITLE', :!inline_formatters),
+is-deeply $=pod.&get-pod-contents-of('TITLE', :!inline-formatters),
           ('An app', ' - ', 'does', ' ', 'some', ' great stuff and ', 'prints', ' the results'),
-          'TITLE - get_pod_contents_of: Content without inline formatters';
+          'TITLE - get-pod-contents-of: Content without inline formatters';
 
-is-deeply $=pod.&join_pod_contents_of('TITLE', :!inline_formatters),
+is-deeply $=pod.&join-pod-contents-of('TITLE', :!inline-formatters),
           "An app\n\n - \n\ndoes\n\n \n\nsome\n\n great stuff and \n\nprints\n\n the results",
-          'TITLE - join_pod_contents_of: Content without inline formatters';
+          'TITLE - join-pod-contents-of: Content without inline formatters';
 
-is-deeply $=pod.first({.?name ~~ 'DESCRIPTION'}).&get_pod_contents, ('Description of the app.', 'It\'s great.'),
-          'DESCRIPTION - get_pod_contents: Content with blank line';
+is-deeply $=pod.first({.?name ~~ 'DESCRIPTION'}).&get-pod-contents, ('Description of the app.', 'It\'s great.'),
+          'DESCRIPTION - get-pod-contents: Content with blank line';
 
-is-deeply $=pod.&get_pod_contents_of('DESCRIPTION'), ('Description of the app.', 'It\'s great.'),
-          'DESCRIPTION - get_pod_contents_of: Content with blank line';
+is-deeply $=pod.&get-pod-contents-of('DESCRIPTION'), ('Description of the app.', 'It\'s great.'),
+          'DESCRIPTION - get-pod-contents-of: Content with blank line';
 
-is-deeply $=pod.&join_pod_contents_of('DESCRIPTION'), "Description of the app.\n\nIt's great.",
-          'DESCRIPTION - join_pod_contents_of: Content with blank line';
+is-deeply $=pod.&join-pod-contents-of('DESCRIPTION'), "Description of the app.\n\nIt's great.",
+          'DESCRIPTION - join-pod-contents-of: Content with blank line';
 
-is $=pod.&get_pods(Pod::Heading).elems, 2, 'Number of all headings of this Pod is correct';
+is $=pod.&get-pods(Pod::Heading).elems, 2, 'Number of all headings of this Pod is correct';
 
-is-deeply $=pod.&get_pods(Pod::Heading).&get_pod_contents,
+is-deeply $=pod.&get-pods(Pod::Heading).&get-pod-contents,
           ('First heading', 'Second heading'),
           'Get all headings of this Pod';
 
-is $=pod.&get_pods(Pod::Block::Table, :recurse).elems, 2, 'Number of all tables using :recurse is correct';
+is $=pod.&get-pods(Pod::Block::Table, :recurse).elems, 2, 'Number of all tables using :recurse is correct';
 
-is $=pod.&get_pods(Pod::Item, :recurse).elems, 4, 'Number of all items using :recurse is correct';
+is $=pod.&get-pods(Pod::Item, :recurse).elems, 4, 'Number of all items using :recurse is correct';
 
-is $=pod.&get_first_pod('pod').&get_pods(Pod::Item).elems, 4, 'Number of all items of Pod is correct';
+is $=pod.&get-first-pod('pod').&get-pods(Pod::Item).elems, 4, 'Number of all items of Pod is correct';
 
-is $=pod.&get_pods('pod')[0].&get_pods(Pod::Item, :recurse).elems, 4,
+is $=pod.&get-pods('pod')[0].&get-pods(Pod::Item, :recurse).elems, 4,
    'Number of all items of Pod using :recurse is correct';
 
-is-deeply $=pod.&get_pods('pod')[0].&get_pods('AUTHOR', :recurse).&join_pod_contents, 'Siavash',
-          'AUTHOR was returned correctly using get_pods :recurse';
+is-deeply $=pod.&get-pods('pod')[0].&get-pods('AUTHOR', :recurse).&join-pod-contents, 'Siavash',
+          'AUTHOR was returned correctly using get-pods :recurse';
 
-is-deeply $=pod.&get_pods('pod')[0].&get_pods('AUTHOR').&join_pod_contents, 'Siavash',
-          'AUTHOR was returned correctly using get_pods';
+is-deeply $=pod.&get-pods('pod')[0].&get-pods('AUTHOR').&join-pod-contents, 'Siavash',
+          'AUTHOR was returned correctly using get-pods';
 
-is-deeply $=pod.&get_pods(Pod::Item, :recurse)[0,1].&get_pod_contents,
+is-deeply $=pod.&get-pods(Pod::Item, :recurse)[0,1].&get-pod-contents,
           ('an item', 'another one'),
           'Get all items';
 
-is-deeply $=pod.&get_pods(Pod::Item, :recurse)[0,1].&join_pod_contents,
+is-deeply $=pod.&get-pods(Pod::Item, :recurse)[0,1].&join-pod-contents,
           "an item\n\nanother one",
           'Join all items';
 
-is-deeply $=pod.&get_pods(Pod::Item, :recurse)[0,1].&join_pod_contents(:adjacent_items),
+is-deeply $=pod.&get-pods(Pod::Item, :recurse)[0,1].&join-pod-contents(:adjacent-items),
           "an item\nanother one",
-          'Join all items using :adjacent_items';
+          'Join all items using :adjacent-items';
 
-is-deeply $=pod.&get_first_pod('pod').contents.grep(Pod::Item)[0,1].&get_pod_contents(:adjacent_items),
+is-deeply $=pod.&get-first-pod('pod').contents.grep(Pod::Item)[0,1].&get-pod-contents(:adjacent-items),
           (('an item', 'another one'),),
-          'Get a list of items with :adjacent_items';
+          'Get a list of items with :adjacent-items';
 
-is-deeply $=pod.&get_first_pod('pod').contents[0,2,3].&get_pod_contents(:adjacent_items),
+is-deeply $=pod.&get-first-pod('pod').contents[0,2,3].&get-pod-contents(:adjacent-items),
           ('Some heading', ('an item', 'another one')),
-          'Get a list of items with :adjacent_items';
+          'Get a list of items with :adjacent-items';
 
-is-deeply $=pod.&get_first_pod('pod').contents[0,2,3].&join_pod_contents(:adjacent_items),
+is-deeply $=pod.&get-first-pod('pod').contents[0,2,3].&join-pod-contents(:adjacent-items),
           "Some heading\n\nan item\nanother one",
-          'Get a string of items with :adjacent_items';
+          'Get a string of items with :adjacent-items';
 
-is-deeply $=pod.&get_pod_contents_of(Pod::Block::Table, :include_title),
+is-deeply $=pod.&get-pod-contents-of(Pod::Block::Table, :include-title),
           (<hcell00 hcell01>, <cell11 cell12>, <cell21 cell22>),
-          'Table - get_pod_contents_of: table with title';
+          'Table - get-pod-contents-of: table with title';
 
-is-deeply $=pod.&join_pod_contents_of(Pod::Block::Table, :include_title),
+is-deeply $=pod.&join-pod-contents-of(Pod::Block::Table, :include-title),
           "hcell00 hcell01\ncell11 cell12\ncell21 cell22",
-          'Table - join_pod_contents_of: table with title';
+          'Table - join-pod-contents-of: table with title';
 
-my @contents_without_indentation is List:D = (
+my @contents-without-indentation is List:D = (
     'Some heading',
     'Text in a paragraph with formatters, a bold and underline. more text and formatters.',
     'an item', 'another one', (<cell11 cell12>, <cell21 cell22>), 'top-level item',
@@ -193,13 +193,13 @@ my @contents_without_indentation is List:D = (
     "Siavash",
 );
 
-is-deeply $=pod.first({.?name ~~ 'pod'}).&get_pod_contents, @contents_without_indentation,
-          'pod - get_pod_contents: Content with pod block, paragraphs and formatters without indentation';
+is-deeply $=pod.first({.?name ~~ 'pod'}).&get-pod-contents, @contents-without-indentation,
+          'pod - get-pod-contents: Content with pod block, paragraphs and formatters without indentation';
 
-is-deeply $=pod.&get_pod_contents_of('pod'), @contents_without_indentation,
-          'pod - get_pod_contents_of: Content with pod block, paragraphs and formatters without indentation';
+is-deeply $=pod.&get-pod-contents-of('pod'), @contents-without-indentation,
+          'pod - get-pod-contents-of: Content with pod block, paragraphs and formatters without indentation';
 
-my @contents_with_indentation is List:D = (
+my @contents-with-indentation is List:D = (
     'Some heading',
     'Text in a paragraph with formatters, a bold and underline. more text and formatters.',
     'an item', 'another one', (<cell11 cell12>, <cell21 cell22>), 'top-level item',
@@ -209,13 +209,13 @@ my @contents_with_indentation is List:D = (
     "Siavash",
 );
 
-is-deeply $=pod.first({.?name ~~ 'pod'}).&get_pod_contents(:indent_content), @contents_with_indentation,
-          'pod - get_pod_contents: Content with pod block and paragraphs and formatters with indentation';
+is-deeply $=pod.first({.?name ~~ 'pod'}).&get-pod-contents(:indent-content), @contents-with-indentation,
+          'pod - get-pod-contents: Content with pod block and paragraphs and formatters with indentation';
 
-is-deeply $=pod.&get_pod_contents_of('pod', :indent_content), @contents_with_indentation,
-          'pod - get_pod_contents_of: Content with pod block and paragraphs and formatters with indentation';
+is-deeply $=pod.&get-pod-contents-of('pod', :indent-content), @contents-with-indentation,
+          'pod - get-pod-contents-of: Content with pod block and paragraphs and formatters with indentation';
 
-my @contents_with_indentation_title is List:D = (
+my @contents-with-indentation-title is List:D = (
     'Some heading',
     'Text in a paragraph with formatters, a bold and underline. more text and formatters.',
     'an item', 'another one', (<cell11 cell12>, <cell21 cell22>), 'top-level item',
@@ -225,14 +225,14 @@ my @contents_with_indentation_title is List:D = (
     "Siavash",
 );
 
-is-deeply $=pod.first({.?name ~~ 'pod'}).&get_pod_contents(:indent_content, :include_title),
-          @contents_with_indentation_title,
-          'pod - get_pod_contents: Content with pod block, paragraphs, formatters with indentation and title';
+is-deeply $=pod.first({.?name ~~ 'pod'}).&get-pod-contents(:indent-content, :include-title),
+          @contents-with-indentation-title,
+          'pod - get-pod-contents: Content with pod block, paragraphs, formatters with indentation and title';
 
-is-deeply $=pod.&get_pod_contents_of('pod', :indent_content, :include_title),
-          @contents_with_indentation_title,
-          'pod - get_pod_contents_of: Content with pod block, paragraphs, formatters with indentation and title';
-my @contents_indented_with_custom_level is List:D = (
+is-deeply $=pod.&get-pod-contents-of('pod', :indent-content, :include-title),
+          @contents-with-indentation-title,
+          'pod - get-pod-contents-of: Content with pod block, paragraphs, formatters with indentation and title';
+my @contents-indented-with-custom-level is List:D = (
     'Some heading',
     'Text in a paragraph with formatters, a bold and underline. more text and formatters.',
     'an item', 'another one', (<cell11 cell12>, <cell21 cell22>), 'top-level item',
@@ -242,15 +242,15 @@ my @contents_indented_with_custom_level is List:D = (
     "Siavash",
 );
 
-is-deeply $=pod.first({.?name ~~ 'pod'}).&get_pod_contents(:indent_content, :indent_level(2)),
-           @contents_indented_with_custom_level,
-          'pod - get_pod_contents: Content with pod block and paragraphs and formatters with indentation 2';
+is-deeply $=pod.first({.?name ~~ 'pod'}).&get-pod-contents(:indent-content, :indent-level(2)),
+           @contents-indented-with-custom-level,
+          'pod - get-pod-contents: Content with pod block and paragraphs and formatters with indentation 2';
 
-is-deeply $=pod.&get_pod_contents_of('pod', :indent_content, :indent_level(2)),
-          @contents_indented_with_custom_level,
-          'pod - get_pod_contents_of: Content with pod block and paragraphs and formatters with indentation 2';
+is-deeply $=pod.&get-pod-contents-of('pod', :indent-content, :indent-level(2)),
+          @contents-indented-with-custom-level,
+          'pod - get-pod-contents-of: Content with pod block and paragraphs and formatters with indentation 2';
 
-my $content_without_indentation =
+my $content-without-indentation =
 ｢Some heading
 
 Text in a paragraph with formatters, a bold and underline. more text and formatters.
@@ -277,10 +277,10 @@ definition
 
 Siavash｣;
 
-is-deeply $=pod.&join_pod_contents_of('pod'), $content_without_indentation,
-          'pod - join_pod_contents_of: Content with pod block, paragraphs and formatters without indentation';
+is-deeply $=pod.&join-pod-contents-of('pod'), $content-without-indentation,
+          'pod - join-pod-contents-of: Content with pod block, paragraphs and formatters without indentation';
 
-my $content_without_indentation_joined_with_one_newline =
+my $content-without-indentation-joined-with-one-newline =
 ｢Some heading
 Text in a paragraph with formatters, a bold and underline. more text and formatters.
 an item
@@ -297,10 +297,10 @@ return 'some string';
 definition
 Siavash｣;
 
-is-deeply $=pod.&join_pod_contents_of('pod', "\n"), $content_without_indentation_joined_with_one_newline,
-          'pod - join_pod_contents_of: Content with pod block, paragraphs, formatters. Joined with a newline, without indentation';
+is-deeply $=pod.&join-pod-contents-of('pod', "\n"), $content-without-indentation-joined-with-one-newline,
+          'pod - join-pod-contents-of: Content with pod block, paragraphs, formatters. Joined with a newline, without indentation';
 
-my $content_with_indentation =
+my $content-with-indentation =
 ｢Some heading
 
 Text in a paragraph with formatters, a bold and underline. more text and formatters.
@@ -327,13 +327,13 @@ top-level item
 
 Siavash｣;
 
-is-deeply $=pod.&get_first_pod('pod').&join_pod_contents(:indent_content), $content_with_indentation,
-          'pod - join_pod_contents: Content with pod block and paragraphs and formatters with indentation';
+is-deeply $=pod.&get-first-pod('pod').&join-pod-contents(:indent-content), $content-with-indentation,
+          'pod - join-pod-contents: Content with pod block and paragraphs and formatters with indentation';
 
-is-deeply $=pod.&join_pod_contents_of('pod', :indent_content), $content_with_indentation,
-          'pod - join_pod_contents_of: Content with pod block, paragraphs and formatters with indentation';
+is-deeply $=pod.&join-pod-contents-of('pod', :indent-content), $content-with-indentation,
+          'pod - join-pod-contents-of: Content with pod block, paragraphs and formatters with indentation';
 
-my $content_with_indentation_title =
+my $content-with-indentation-title =
 ｢Some heading
 
 Text in a paragraph with formatters, a bold and underline. more text and formatters.
@@ -361,5 +361,5 @@ something
 
 Siavash｣;
 
-is-deeply $=pod.&join_pod_contents_of('pod', :indent_content, :include_title), $content_with_indentation_title,
-          'pod - join_pod_contents_of: Content with pod block, paragraphs and formatters with title';
+is-deeply $=pod.&join-pod-contents-of('pod', :indent-content, :include-title), $content-with-indentation-title,
+          'pod - join-pod-contents-of: Content with pod block, paragraphs and formatters with title';

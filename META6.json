@@ -9,10 +9,10 @@
   ],
   "description": "a Raku module for getting Pod contents as a list or string",
   "license": "Artistic-2.0",
-  "name": "Pod::Contents",
+  "name": "Pod::ContentsKebab",
   "perl": "6.d",
   "provides": {
-    "Pod::Contents": "lib/Pod/Contents.rakumod"
+    "Pod::ContentsKebab": "lib/Pod/ContentsKebab.rakumod"
   },
   "resources": [
   ],

@@ -38,61 +38,61 @@ cell21  | cell22
 
 =end pod
 
-put $=pod.&join_pod_contents_of: 'NAME';
+put $=pod.&join-pod-contents-of: 'NAME';
 =output My App␤
 
-put $=pod.&get_first_pod('NAME').&join_pod_contents;
+put $=pod.&get-first-pod('NAME').&join-pod-contents;
 =output My App␤
 
-put $=pod[0].&join_pod_contents;
+put $=pod[0].&join-pod-contents;
 =output My App␤
 
-put $=pod[0].&get_pod_contents.join("\n\n");
+put $=pod[0].&get-pod-contents.join("\n\n");
 =output My App␤
 
-put $=pod.&join_pod_contents_of: 'DESCRIPTION';
+put $=pod.&join-pod-contents-of: 'DESCRIPTION';
 =output An app that does stuff␤
 
-put $=pod.&join_pod_contents_of: 'DESCRIPTION', :!inline_formatters;
+put $=pod.&join-pod-contents-of: 'DESCRIPTION', :!inline-formatters;
 =output An ␤␤app␤␤ that does ␤␤stuff␤
 
-put $=pod.&join_pod_contents_of: 'DESCRIPTION', "\n", :!inline_formatters;
+put $=pod.&join-pod-contents-of: 'DESCRIPTION', "\n", :!inline-formatters;
 =output An ␤app␤ that does ␤stuff␤
 
-put $=pod.&get_pod_contents_of('DESCRIPTION', :!inline_formatters).raku;
+put $=pod.&get-pod-contents-of('DESCRIPTION', :!inline-formatters).raku;
 =output ("An ", "app", " that does ", "stuff")␤
 
-put $=pod.&get_first_pod('pod').&join_pod_contents_of: Pod::Heading;
+put $=pod.&get-first-pod('pod').&join-pod-contents-of: Pod::Heading;
 =output A heading␤
 
-put $=pod.&join_pod_contents_of: Pod::Item, :recurse;
+put $=pod.&join-pod-contents-of: Pod::Item, :recurse;
 =output An item␤
 
-put $=pod.&get_pod_contents_of(Pod::Block::Table, :recurse).raku;
+put $=pod.&get-pod-contents-of(Pod::Block::Table, :recurse).raku;
 =output (("cell11", "cell12"), ("cell21", "cell22"))␤
 
-put $=pod.&get_pod_contents_of(Pod::Block::Table, :recurse, :include_title).raku;
+put $=pod.&get-pod-contents-of(Pod::Block::Table, :recurse, :include-title).raku;
 =output (("hcell00", "hcell01"), ("cell11", "cell12"), ("cell21", "cell22"))␤
 
-put $=pod.&join_pod_contents_of: Pod::Block::Table, :recurse;
+put $=pod.&join-pod-contents-of: Pod::Block::Table, :recurse;
 =output cell11 cell12␤cell21 cell22␤
 
-put $=pod.&join_pod_contents_of: Pod::Block::Table, :recurse, :include_title;
+put $=pod.&join-pod-contents-of: Pod::Block::Table, :recurse, :include-title;
 =output hcell00 hcell01␤cell11 cell12␤cell21 cell22␤
 
-put $=pod.&join_pod_contents_of: Pod::Block::Code, :recurse;
+put $=pod.&join-pod-contents-of: Pod::Block::Code, :recurse;
 =output my $app;␤say 'some code'␤
 
-put $=pod.&join_pod_contents_of: Pod::Block::Code, :indent_content, :recurse;
+put $=pod.&join-pod-contents-of: Pod::Block::Code, :indent-content, :recurse;
 =output     my $app;␤    say 'some code'␤
 
-put $=pod.&get_first_pod('pod').contents.grep(Pod::Item)[1].&join_pod_contents(:indent_content);
+put $=pod.&get-first-pod('pod').contents.grep(Pod::Item)[1].&join-pod-contents(:indent-content);
 =output     Another item␤␤   cell11 cell12␤cell21 cell22␤␤        my $app;␤        say 'some code'␤
 
-put $=pod.&get_first_pod('pod').&get_pods(Pod::Item)[1].&join_pod_contents(:indent_content, :indent_level(2));
+put $=pod.&get-first-pod('pod').&get-pods(Pod::Item)[1].&join-pod-contents(:indent-content, :indent-level(2));
 =output   Another item␤␤ cell11 cell12␤cell21 cell22␤␤      my $app;␤      say 'some code'␤
 
-put $=pod.&get_pods(Pod::Item, :recurse)[1].&join_pod_contents(:indent_content, :indent_level(2));
+put $=pod.&get-pods(Pod::Item, :recurse)[1].&join-pod-contents(:indent-content, :indent-level(2));
 =output   Another item␤␤ cell11 cell12␤cell21 cell22␤␤      my $app;␤      say 'some code'␤
 
 =end code
@@ -143,73 +143,73 @@ subset PodOrArrayOfPod where POD | ArrayOfPod;
 
 #| Returns a list of pod contents.
 #| Can recursively find pod with C<:recurse>.
-#| Can indent pod contents with C<:indent_content>.
-#| Can include pod titles with C<:include_title>.
-#| Can disable inlining pod formatters with C<:!inline_formatters>.
-#| Can put same level items next to each other with C<:adjacent_items>.
-sub get_pod_contents_of (PodOrArrayOfPod $pod, StrOrPod $thing, Bool :$recurse, |c --> List:D) is export {
-    get_pod_contents $_, |c given get_first_pod $pod, $thing, :$recurse;
+#| Can indent pod contents with C<:indent-content>.
+#| Can include pod titles with C<:include-title>.
+#| Can disable inlining pod formatters with C<:!inline-formatters>.
+#| Can put same level items next to each other with C<:adjacent-items>.
+sub get-pod-contents-of (PodOrArrayOfPod $pod, StrOrPod $thing, Bool :$recurse, |c --> List:D) is export {
+    get-pod-contents $_, |c given get-first-pod $pod, $thing, :$recurse;
 }
 
 #| Joins pod contents of the requested Pod with the passed string or 2 newlines.
 #| Can recursively find pod with C<:recurse>.
-#| Can indent pod contents with C<:indent_content>.
-#| Can include pod titles with C<:include_title>.
-#| Can disable inlining pod formatters with C<:!inline_formatters>.
-#| Can put same level items next to each other with C<:adjacent_items>.
-sub join_pod_contents_of (PodOrArrayOfPod $pod, StrOrPod $thing, Bool :$recurse, |c --> Str:D) is export {
-    join_pod_contents $_, |c given get_first_pod $pod, $thing, :$recurse;
+#| Can indent pod contents with C<:indent-content>.
+#| Can include pod titles with C<:include-title>.
+#| Can disable inlining pod formatters with C<:!inline-formatters>.
+#| Can put same level items next to each other with C<:adjacent-items>.
+sub join-pod-contents-of (PodOrArrayOfPod $pod, StrOrPod $thing, Bool :$recurse, |c --> Str:D) is export {
+    join-pod-contents $_, |c given get-first-pod $pod, $thing, :$recurse;
 }
 
 #| Finds the first Pod using the passed C<pod> or C<name>, does so recursively if C<:recurse> is passed.
-proto get_first_pod (PodOrArrayOfPod $pod, StrOrPod $thing, Bool :$recurse --> POD) is export {*}
+proto get-first-pod (PodOrArrayOfPod $pod, StrOrPod $thing, Bool :$recurse --> POD) is export {*}
 
-multi get_first_pod (@pod, $pod_type, :$recurse = False --> POD) {
+multi get-first-pod (@pod, $pod-type, :$recurse = False --> POD) {
     if $recurse {
         @pod.map: -> POD $pod {
-            if check_pod $pod, $pod_type {
+            if check-pod $pod, $pod-type {
                 $pod;
             } elsif $pod.contents ~~ ArrayOfPod {
-                $_ with samewith $pod.contents, $pod_type, :recurse;
+                $_ with samewith $pod.contents, $pod-type, :recurse;
             }
         } andthen .head;
     } else {
-        @pod.first: &check_pod.assuming: *, $pod_type;
+        @pod.first: &check-pod.assuming: *, $pod-type;
     }
 }
 
-multi get_first_pod (POD $pod, POD $pod_type, :$recurse = False --> POD) {
-    samewith $pod.contents, $pod_type, :$recurse;
+multi get-first-pod (POD $pod, POD $pod-type, :$recurse = False --> POD) {
+    samewith $pod.contents, $pod-type, :$recurse;
 }
 
 #| Finds all Pods using the passed C<pod> or C<name>, does so recursively if C<:recurse> is passed
-proto get_pods (PodOrArrayOfPod $pod, StrOrPod $thing, Bool :$recurse --> List:D) is export {*}
+proto get-pods (PodOrArrayOfPod $pod, StrOrPod $thing, Bool :$recurse --> List:D) is export {*}
 
-multi get_pods (@pods, $pod_type, :$recurse = False) {
+multi get-pods (@pods, $pod-type, :$recurse = False) {
     if $recurse {
         @pods.map: -> POD $pod {
-            if check_pod $pod, $pod_type {
+            if check-pod $pod, $pod-type {
                 $pod;
             } elsif $pod.contents ~~ ArrayOfPod {
-                $_ with |samewith $pod.contents, $pod_type, :recurse;
+                $_ with |samewith $pod.contents, $pod-type, :recurse;
             }
         } andthen .grep(&so).List;
     } else {
-        @pods.grep: &check_pod.assuming: *, $pod_type andthen .List;
+        @pods.grep: &check-pod.assuming: *, $pod-type andthen .List;
     }
 }
 
-multi get_pods (POD $pod, $pod_type, :$recurse = False) {
-    samewith $pod.contents, $pod_type, :$recurse;
+multi get-pods (POD $pod, $pod-type, :$recurse = False) {
+    samewith $pod.contents, $pod-type, :$recurse;
 }
 
 #| Joins pod contents of the requested Pod type with the passed string or 2 newlines.
-#| Can indent pod contents with C<:indent_content>.
-#| Can include pod titles with C<:include_title>.
-#| Can disable inlining pod formatters with C<:!inline_formatters>.
-#| Can put same level items next to each other with C<:adjacent_items>.
-sub join_pod_contents (PodOrArrayOfPod $pod, $with = "\n\n", |c --> Str:D) is export {
-    if get_pod_contents $pod, |c -> @contents {
+#| Can indent pod contents with C<:indent-content>.
+#| Can include pod titles with C<:include-title>.
+#| Can disable inlining pod formatters with C<:!inline-formatters>.
+#| Can put same level items next to each other with C<:adjacent-items>.
+sub join-pod-contents (PodOrArrayOfPod $pod, $with = "\n\n", |c --> Str:D) is export {
+    if get-pod-contents $pod, |c -> @contents {
         join $with, do given @contents {
             if $_ ~~ List:D && .elems > 1 && .all ~~ List:D { .join: "\n" }
             else {
@@ -225,40 +225,40 @@ sub join_pod_contents (PodOrArrayOfPod $pod, $with = "\n\n", |c --> Str:D) is ex
 }
 
 #| Recursively gets the Pod contents of a Pod block as a list of (list of) strings.
-#| Can indent pod contents with C<:indent_content>.
-#| Can include pod titles with C<:include_title>.
-#| Can disable inlining pod formatters with C<:!inline_formatters>.
-#| Can put same level items next to each other with C<:adjacent_items>.
-proto get_pod_contents (|) is export {*};
+#| Can indent pod contents with C<:indent-content>.
+#| Can include pod titles with C<:include-title>.
+#| Can disable inlining pod formatters with C<:!inline-formatters>.
+#| Can put same level items next to each other with C<:adjacent-items>.
+proto get-pod-contents (|) is export {*};
 
-multi get_pod_contents (IndentablePod:D $pod,
-                        |c (Bool:D :$indent_content       = False,
-                            UInt:D :$indent_level is copy = 4,
-                            Bool:D :$include_title        = False,
+multi get-pod-contents (IndentablePod:D $pod,
+                        |c (Bool:D :$indent-content       = False,
+                            UInt:D :$indent-level is copy = 4,
+                            Bool:D :$include-title        = False,
                             |)
                         --> List:D) {
     my @contents = samewith $pod.contents, |c;
 
-    if $indent_content {
-        $indent_level ×= .level - 1 when Pod::Item given $pod;
+    if $indent-content {
+        $indent-level ×= .level - 1 when Pod::Item given $pod;
 
-        @contents.=map: *.join("\n").&indent_content: $indent_level;
+        @contents.=map: *.join("\n").&indent-content: $indent-level;
     }
 
-    if $include_title && $pod ~~ Pod::Defn {
+    if $include-title && $pod ~~ Pod::Defn {
         @contents.unshift: (samewith($pod.term, |c), @contents.shift);
     }
 
     @contents.List;
 }
 
-multi get_pod_contents (SomePod:D $pod, |c (Bool:D :$include_title = False, |) --> List:D) {
+multi get-pod-contents (SomePod:D $pod, |c (Bool:D :$include-title = False, |) --> List:D) {
     given $pod {
         when Pod::Block::Table:D {
             my List:D $contents       = .contents;
-            my List:D $table_contents = $include_title ?? (.headers || Empty, |$contents) !! $contents;
+            my List:D $table-contents = $include-title ?? (.headers || Empty, |$contents) !! $contents;
 
-            $table_contents.map({ .map({ samewith $_, |c }).List }).List;
+            $table-contents.map({ .map({ samewith $_, |c }).List }).List;
         }
         default {
             samewith .contents, |c;
@@ -266,38 +266,38 @@ multi get_pod_contents (SomePod:D $pod, |c (Bool:D :$include_title = False, |) -
     }
 }
 
-multi get_pod_contents (@pod_contents,
-                        |c (Bool:D :$inline_formatters = True, Bool:D :$adjacent_items = False, |)
+multi get-pod-contents (@pod-contents,
+                        |c (Bool:D :$inline-formatters = True, Bool:D :$adjacent-items = False, |)
                         --> List:D) {
     my @contents;
 
-    loop (my $i = 0; $i < @pod_contents; $i++) {
-        if $inline_formatters and @pod_contents[$i] ~~ Pod::FormattingCode:D {
+    loop (my $i = 0; $i < @pod-contents; $i++) {
+        if $inline-formatters and @pod-contents[$i] ~~ Pod::FormattingCode:D {
             # First observation of pod formatter
             # If the pod content before first pod formatter is a string, consider it the first index,
             # otherwise first index is the pod formatter
-            my UInt:D $first_index = $i > 0 && @contents[$i - 1] ~~ Str:D ?? $i - 1 !! $i;
+            my UInt:D $first-index = $i > 0 && @contents[$i - 1] ~~ Str:D ?? $i - 1 !! $i;
 
-            while @pod_contents[$i] ~~ Pod::FormattingCode:D | Str:D {
-                my Str:D $string = samewith(@pod_contents[$i], |c).join;
+            while @pod-contents[$i] ~~ Pod::FormattingCode:D | Str:D {
+                my Str:D $string = samewith(@pod-contents[$i], |c).join;
 
                 # Append string to the first content
-                @contents[$first_index] ~= $string;
+                @contents[$first-index] ~= $string;
 
                 $i++;
             }
-        } elsif $adjacent_items and @pod_contents[$i] ~~ Pod::Item:D {
-            my @item_contents;
+        } elsif $adjacent-items and @pod-contents[$i] ~~ Pod::Item:D {
+            my @item-contents;
 
-            while @pod_contents[$i] ~~ Pod::Item:D {
-                @item_contents.append: samewith @pod_contents[$i], |c;
+            while @pod-contents[$i] ~~ Pod::Item:D {
+                @item-contents.append: samewith @pod-contents[$i], |c;
 
                 $i++;
             }
 
-            @contents.push: @item_contents.List;
+            @contents.push: @item-contents.List;
         } else {
-            given @pod_contents[$i] {
+            given @pod-contents[$i] {
                 when List:D | Pod::Block::Table:D {
                     @contents.push: samewith($_, |c).List;
                 }
@@ -311,18 +311,18 @@ multi get_pod_contents (@pod_contents,
     @contents.List;
 }
 
-multi get_pod_contents (Str:D $content, | --> Str:D) {
+multi get-pod-contents (Str:D $content, | --> Str:D) {
     $content;
 }
 
-#| Returns C<True> if C<pod> matches C<pod_type>
-sub check_pod (POD $pod, StrOrPod $pod_type --> Bool:D) is export(:helpers) {
-    $pod | $pod.?name ~~ $pod_type;
+#| Returns C<True> if C<pod> matches C<pod-type>
+sub check-pod (POD $pod, StrOrPod $pod-type --> Bool:D) is export(:helpers) {
+    $pod | $pod.?name ~~ $pod-type;
 }
 
-#| Indents C<string> by C<indent_level>
-sub indent_content (Str:D $string, UInt:D $indent_level = 4 --> Str:D) is export(:helpers) {
-    $string.lines.map(' ' x $indent_level ~ *).join: "\n";
+#| Indents C<string> by C<indent-level>
+sub indent-content (Str:D $string, UInt:D $indent-level = 4 --> Str:D) is export(:helpers) {
+    $string.lines.map(' ' x $indent-level ~ *).join: "\n";
 }
 
 =REPOSITORY L<https://codeberg.org/CIAvash/Pod-Contents/>

@@ -1,4 +1,8 @@
 Revision history for Pod-Contents
 
 {{$NEXT}}
-    - Initial version
+    - pr2
+      + add kebab-case names for all subroutines
+    - pr1:
+      + Convert to use App::Mi6
+      + Initial version
