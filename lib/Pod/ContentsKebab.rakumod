@@ -1,8 +1,15 @@
 use v6.d;
 
-=NAME Pod::Contents - a L<Raku|https://www.raku-lang.ir/en> module for getting Pod contents as a list or string.
+=NAME Pod::ContentsKebab - a L<Raku|https://www.raku-lang.ir/en> module for getting Pod contents as a list or string.
 
-=DESCRIPTION Pod::Contents is a L<Raku|https://www.raku-lang.ir/en> module for getting the Pod contents as a
+=begin para
+NOTE: This module is an exact copy of \@CIAvash's fine Raku module Pod::Contents. See
+the new 'Changes' file for details, but the two things changed were: (1) making the
+module structure use module App::Mi6 and (2) changing indentifier names to 'kebab-case'
+from 'snake-case'.
+=end para
+
+=DESCRIPTION Pod::ContentsKebab is a L<Raku|https://www.raku-lang.ir/en> module for getting the Pod contents as a
 list of strings or string.
 Pod formatters can get inlined, pod contents can be indented (with custom level) and joined with a
 custom string and titles can be included for table headers and defn terms.
@@ -11,7 +18,7 @@ custom string and titles can be included for table headers and defn terms.
 
 =begin code :lang<raku>
 
-use Pod::Contents:auth<zef:CIAvash>;
+use Pod::ContentsKebab:auth<zef:CIAvash>;
 
 =NAME My App
 
@@ -106,7 +113,7 @@ then run:
 
 =begin code :lang<console>
 
-zef install --/test Pod::Contents:auth<zef:CIAvash>
+zef install --/test Pod::ContentsKebab:auth<zef:CIAvash>
 
 =end code
 
@@ -130,7 +137,7 @@ prove -ve 'raku -I.' --ext rakutest
 
 =end TESTING
 
-unit module Pod::Contents:auth($?DISTRIBUTION.meta<auth>):ver($?DISTRIBUTION.meta<version>);
+unit module Pod::ContentsKebab:auth($?DISTRIBUTION.meta<auth>):ver($?DISTRIBUTION.meta<version>);
 
 subset SomePod       where Pod::Block | Pod::Heading     | Pod::FormattingCode;
 subset IndentablePod where Pod::Item  | Pod::Block::Code | Pod::Defn;
@@ -325,27 +332,27 @@ sub indent-content (Str:D $string, UInt:D $indent-level = 4 --> Str:D) is export
     $string.lines.map(' ' x $indent-level ~ *).join: "\n";
 }
 
-=REPOSITORY L<https://codeberg.org/CIAvash/Pod-Contents/>
+=REPOSITORY L<https://codeberg.org/CIAvash/Pod-ContentsKebab/>
 
-=BUG L<https://codeberg.org/CIAvash/Pod-Contents/issues>
+=BUG L<https://codeberg.org/CIAvash/Pod-ContentsKebab/issues>
 
 =AUTHOR Siavash Askari Nasr - L<https://siavash.askari-nasr.com>
 
 =COPYRIGHT Copyright © 2021 Siavash Askari Nasr
 
 =begin LICENSE
-This file is part of Pod::Contents.
+This file is part of Pod::ContentsKebab.
 
-Pod::Contents is free software: you can redistribute it and/or modify
+Pod::ContentsKebab is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-Pod::Contents is distributed in the hope that it will be useful,
+Pod::ContentsKebab is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Lesser General Public License for more details.
 
 You should have received a copy of the GNU Lesser General Public License
-along with Pod::Contents.  If not, see <http://www.gnu.org/licenses/>.
+along with Pod::ContentsKebab.  If not, see <http://www.gnu.org/licenses/>.
 =end LICENSE

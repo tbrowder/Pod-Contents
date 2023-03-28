@@ -1,20 +1,22 @@
-[![Actions Status](https://github.com/tbrowder/Pod-Contents/actions/workflows/linux.yml/badge.svg)](https://github.com/tbrowder/Pod-Contents/actions) [![Actions Status](https://github.com/tbrowder/Pod-Contents/actions/workflows/macos.yml/badge.svg)](https://github.com/tbrowder/Pod-Contents/actions) [![Actions Status](https://github.com/tbrowder/Pod-Contents/actions/workflows/windows.yml/badge.svg)](https://github.com/tbrowder/Pod-Contents/actions)
+[![Actions Status](https://github.com/tbrowder/Pod-ContentsKebab/actions/workflows/linux.yml/badge.svg)](https://github.com/tbrowder/Pod-ContentsKebab/actions) [![Actions Status](https://github.com/tbrowder/Pod-ContentsKebab/actions/workflows/macos.yml/badge.svg)](https://github.com/tbrowder/Pod-ContentsKebab/actions) [![Actions Status](https://github.com/tbrowder/Pod-ContentsKebab/actions/workflows/windows.yml/badge.svg)](https://github.com/tbrowder/Pod-ContentsKebab/actions)
 
 NAME
 ====
 
-Pod::Contents - a [Raku](https://www.raku-lang.ir/en) module for getting Pod contents as a list or string.
+Pod::ContentsKebab - a [Raku](https://www.raku-lang.ir/en) module for getting Pod contents as a list or string.
+
+NOTE: This module is an exact copy of \@CIAvash's fine Raku module Pod::Contents. See the new 'Changes' file for details, but the two things changed were: (1) making the module structure use module App::Mi6 and (2) changing indentifier names to 'kebab-case' from 'snake-case'.
 
 DESCRIPTION
 ===========
 
-Pod::Contents is a [Raku](https://www.raku-lang.ir/en) module for getting the Pod contents as a list of strings or string. Pod formatters can get inlined, pod contents can be indented (with custom level) and joined with a custom string and titles can be included for table headers and defn terms.
+Pod::ContentsKebab is a [Raku](https://www.raku-lang.ir/en) module for getting the Pod contents as a list of strings or string. Pod formatters can get inlined, pod contents can be indented (with custom level) and joined with a custom string and titles can be included for table headers and defn terms.
 
 SYNOPSIS
 ========
 
 ```raku
-use Pod::Contents:auth<zef:CIAvash>;
+use Pod::ContentsKebab:auth<zef:CIAvash>;
 
 =NAME My App
 
@@ -105,7 +107,7 @@ INSTALLATION
 You need to have [Raku](https://www.raku-lang.ir/en) and [zef](https://github.com/ugexe/zef), then run:
 
 ```console
-zef install --/test Pod::Contents:auth<zef:CIAvash>
+zef install --/test Pod::ContentsKebab:auth<zef:CIAvash>
 ```
 
 or if you have cloned the repo:
@@ -159,7 +161,7 @@ sub get-first-pod(
     $pod where { ... },
     $thing where { ... },
     Bool :$recurse
-) returns Pod::Contents::POD
+) returns Pod::ContentsKebab::POD
 ```
 
 Finds the first Pod using the passed C<pod> or C<name>, does so recursively if C<:recurse> is passed.
@@ -223,12 +225,12 @@ Indents C<string> by C<indent-level>
 REPOSITORY
 ==========
 
-[https://codeberg.org/CIAvash/Pod-Contents/](https://codeberg.org/CIAvash/Pod-Contents/)
+[https://codeberg.org/CIAvash/Pod-ContentsKebab/](https://codeberg.org/CIAvash/Pod-ContentsKebab/)
 
 BUG
 ===
 
-[https://codeberg.org/CIAvash/Pod-Contents/issues](https://codeberg.org/CIAvash/Pod-Contents/issues)
+[https://codeberg.org/CIAvash/Pod-ContentsKebab/issues](https://codeberg.org/CIAvash/Pod-ContentsKebab/issues)
 
 AUTHOR
 ======
@@ -243,11 +245,11 @@ Copyright © 2021 Siavash Askari Nasr
 LICENSE
 =======
 
-This file is part of Pod::Contents.
+This file is part of Pod::ContentsKebab.
 
-Pod::Contents is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+Pod::ContentsKebab is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-Pod::Contents is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+Pod::ContentsKebab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public License along with Pod::Contents. If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU Lesser General Public License along with Pod::ContentsKebab. If not, see <http://www.gnu.org/licenses/>.
 
